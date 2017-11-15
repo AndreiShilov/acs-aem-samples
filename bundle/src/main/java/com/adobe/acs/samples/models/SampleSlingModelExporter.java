@@ -27,20 +27,29 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.models.annotations.*;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
+import org.apache.sling.models.annotations.Exporter;
+import org.apache.sling.models.annotations.ExporterOption;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Optional;
+import org.apache.sling.models.annotations.Required;
+import org.apache.sling.models.annotations.Source;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jcr.Session;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Excellent documentation: http://sling.apache.org/documentation/bundles/models.html
@@ -66,7 +75,7 @@ import java.util.Map;
 @Model(
         // This must adapt from a SlingHttpServletRequest, since this is invoked directly via a request, and not via a resource.
         // If can specify Resource.class as a second adaptable as needed
-        adaptables = { SlingHttpServletRequest.class },
+        adaptables = { Resource.class, SlingHttpServletRequest.class},
         // The resourceType is required if you want Sling to "naturally" expose this model as the exporter for a Resource.
         resourceType = "acs-samples/components/content/sling-model",
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
